@@ -2,31 +2,26 @@
 A portfolio and stock market tracking app that provides real-time market data and investment performance analysis to help users make informed financial decisions.
 
 ## Prerequisites
-- Java Development Kit (JDK) 23 or later
-- Maven 3.6 or later
-- Docker (for MySQL container)
+- Docker
+- Docker Compose
 
-## Setup & Running
+## Running with Docker
 1. Clone the repository:
 ```bash
 git clone https://github.com/batuhannoz/invest-track
 cd invest-track
 ```
 
-2. Build the project:
+2. Build and start the containers:
 ```bash
-mvn clean install
-```
-
-3. Run the application:
-```bash
-mvn spring-boot:run
+docker compose up --build
 ```
 
 The application will:
-- Automatically start MySQL in a Docker container (using compose.yaml)
+- Build the Spring Boot application
+- Create and start MySQL container
 - Create necessary database tables
-- Start the Spring Boot application
+- Start the application
 - Listen on port 8080
 
 ## Verify Installation
@@ -37,5 +32,6 @@ http://localhost:8080
 
 ## Notes
 - The MySQL database will be accessible at localhost:3306
-- Default database credentials are in application.properties
-- The Docker container for MySQL is managed automatically by Spring Boot
+- MySQL data is persisted using Docker volumes
+- To stop the application use: `docker compose down`
+- To remove all data including volumes use: `docker compose down -v`
