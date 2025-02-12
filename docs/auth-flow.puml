@@ -1,0 +1,54 @@
+@startuml
+actor "User" as user
+participant "Frontend" as frontend
+participant "AuthController" as controller
+participant "AuthService" as service
+participant "JwtService" as jwt
+database "Database" as db
+
+title Authentication Flow Diagram
+
+== Sign Up Process ==
+user -> frontend: Enter registration details
+frontend -> controller: POST /auth/signup
+note right: email, password, name
+controller -> service: signup(RegisterUserDto)
+service -> service: validate input
+service -> service: hash password
+service -> db: save user
+db --> service: return saved user
+service --> controller: return User object
+controller --> frontend: return User JSON
+frontend --> user: Show success message
+
+== Login Process ==
+user -> frontend: Enter login credentials
+frontend -> controller: POST /auth/login
+note right: email, password
+controller -> service: authenticate(LoginUserDto)
+service -> db: find user by email
+db --> service: return user
+service -> service: verify password
+service -> jwt: generateToken(user)
+jwt --> service: return JWT token
+service --> controller: return authenticated user
+controller -> jwt: getExpirationTime()
+jwt --> controller: return expiration time
+controller --> frontend: return token & expiration
+frontend -> frontend: store token
+frontend --> user: Redirect to dashboard
+
+== Protected Request Flow ==
+user -> frontend: Access protected resource
+frontend -> controller: Request with JWT header
+note right: Authorization: Bearer <token>
+controller -> jwt: validateToken(token)
+jwt --> controller: token valid/invalid
+alt Token Valid
+    controller --> frontend: Return protected resource
+else Token Invalid
+    controller --> frontend: Return 401 Unauthorized
+    frontend --> user: Redirect to login
+end
+
+@enduml
