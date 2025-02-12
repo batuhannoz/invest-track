@@ -18,7 +18,7 @@ Then run the Spring Boot application using your IDE or:
 ./mvnw spring-boot:run
 ```
 
-### Production Mode (Complete Stack)
+### Complete Stack Test Mode
 To run both MySQL and the Spring Boot application in containers:
 ```bash
 docker compose -f compose.test.yaml up --build
