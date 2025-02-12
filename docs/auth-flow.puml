@@ -11,10 +11,7 @@ title Authentication Flow Diagram
 == Sign Up Process ==
 user -> frontend: Enter registration details
 frontend -> controller: POST /auth/signup
-note right: email, password, name
-controller -> service: signup(RegisterUserDto)
-service -> service: validate input
-service -> service: hash password
+controller -> service: signup(RegisterUserRequest)
 service -> db: save user
 db --> service: return saved user
 service --> controller: return User object
@@ -24,18 +21,18 @@ frontend --> user: Show success message
 == Login Process ==
 user -> frontend: Enter login credentials
 frontend -> controller: POST /auth/login
-note right: email, password
-controller -> service: authenticate(LoginUserDto)
-service -> db: find user by email
-db --> service: return user
-service -> service: verify password
-service -> jwt: generateToken(user)
-jwt --> service: return JWT token
+controller -> service: authenticate(LoginUserRequest)
+service -> db: find and authenticate user
+db --> service: return authenticated user
 service --> controller: return authenticated user
+controller -> jwt: generateToken(authenticatedUser)
+jwt --> controller: return access token
+controller -> jwt: generateRefreshToken(authenticatedUser)
+jwt --> controller: return refresh token
 controller -> jwt: getExpirationTime()
 jwt --> controller: return expiration time
-controller --> frontend: return token & expiration
-frontend -> frontend: store token
+controller --> frontend: return LoginResponse(accessToken, refreshToken, expiresIn)
+frontend -> frontend: store both tokens
 frontend --> user: Redirect to dashboard
 
 == Protected Request Flow ==
@@ -47,6 +44,23 @@ jwt --> controller: token valid/invalid
 alt Token Valid
     controller --> frontend: Return protected resource
 else Token Invalid
+    controller --> frontend: Return 401 Unauthorized
+    frontend --> user: Redirect to login
+end
+
+== Refresh Token Process ==
+user -> frontend: Access token expired
+frontend -> controller: POST /auth/refresh
+note right: Body: refreshToken
+controller -> jwt: validateRefreshToken(refreshToken)
+alt Refresh Token Valid
+    controller -> jwt: generateNewAccessToken()
+    jwt --> controller: return new access token
+    controller -> jwt: getExpirationTime()
+    jwt --> controller: return expiration time
+    controller --> frontend: return LoginResponse(newAccessToken, expiresIn)
+    frontend -> frontend: update access token
+else Refresh Token Invalid or Expired
     controller --> frontend: Return 401 Unauthorized
     frontend --> user: Redirect to login
 end
