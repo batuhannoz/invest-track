@@ -17,9 +17,18 @@ Register a new user in the system.
 ### Response
 ```json
 {
-    "id": "number",
+    "id": 2,
+    "name": "string",
     "email": "string",
-    "name": "string"
+    "password": "encrypted-password",
+    "createdAt": "2025-02-12T09:16:13.642+00:00",
+    "updatedAt": "2025-02-12T09:16:13.642+00:00",
+    "enabled": true,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true,
+    "accountNonLocked": true,
+    "authorities": [],
+    "username": "string"
 }
 ```
 
