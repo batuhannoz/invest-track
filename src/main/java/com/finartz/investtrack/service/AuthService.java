@@ -1,7 +1,7 @@
 package com.finartz.investtrack.service;
 
-import com.finartz.investtrack.dto.LoginUserDto;
-import com.finartz.investtrack.dto.RegisterUserDto;
+import com.finartz.investtrack.controller.request.LoginUserRequest;
+import com.finartz.investtrack.controller.request.RegisterUserRequest;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +22,24 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public User signup(RegisterUserDto input) {
+    public User signup(RegisterUserRequest request) {
         var user = new User()
-                .setName(input.getName())
-                .setEmail(input.getEmail())
-                .setPassword(passwordEncoder.encode(input.getPassword()));
+                .setName(request.getName())
+                .setEmail(request.getEmail())
+                .setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userRepository.save(user);
     }
 
-    public User authenticate(LoginUserDto input) {
+    public User authenticate(LoginUserRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
-                        input.getPassword()
+                        request.getEmail(),
+                        request.getPassword()
                 )
         );
 
-        return userRepository.findByEmail(input.getEmail()).orElseThrow();
+        return userRepository.findByEmail(request.getEmail()).orElseThrow();
     }
 
 }

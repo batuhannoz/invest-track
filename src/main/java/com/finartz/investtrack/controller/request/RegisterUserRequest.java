@@ -1,7 +1,7 @@
-package com.finartz.investtrack.dto;
+package com.finartz.investtrack.controller.request;
 
 
-public class RegisterUserDto {
+public class RegisterUserRequest {
 
     private String email;
 
