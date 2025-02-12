@@ -44,11 +44,10 @@ Authenticate a user and receive a JWT token.
 }
 ```
 
-### Login Response
+### Response
 ```json
 {
-    "accessToken": "string",
-    "refreshToken": "string",
+    "token": "string",
     "expiresIn": "number"
 }
 ```
@@ -88,40 +87,34 @@ curl -X POST http://localhost:8080/auth/login \
 ```
 
 ## Refresh Token
-Get a new access token using a refresh token.
+Get a new access token using the current token before it expires.
 
 **Endpoint:** `POST /auth/refresh`
 
-### Request Body
-```json
-{
-    "refreshToken": "string"
-}
+### Request Headers
+```
+Authorization: Bearer <current-token>
 ```
 
 ### Response
 ```json
 {
-    "accessToken": "string",
+    "token": "string",
     "expiresIn": "number"
 }
 ```
 
 ### Status Codes
-- 200 OK: Successfully refreshed access token
-- 401 Unauthorized: Invalid or expired refresh token
+- 200 OK: Successfully refreshed token
+- 401 Unauthorized: Invalid or expired token
 
 ### Example
 ```bash
 curl -X POST http://localhost:8080/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token-here"
-  }'
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..."
 ```
 
 ### Notes
-- The refresh token has a longer lifespan than the access token
-- Use the refresh token to obtain a new access token when the old one expires
-- If the refresh token is expired, user needs to log in again
-- Keep the refresh token secure and never send it in API requests except to the refresh endpoint
+- The refresh token endpoint should be called before the current token expires
+- The new token will have a new expiration time
+- If the current token is already expired, user needs to log in again
