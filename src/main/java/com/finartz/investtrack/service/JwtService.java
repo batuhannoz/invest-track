@@ -1,5 +1,6 @@
 package com.finartz.investtrack.service;
 
+import com.finartz.investtrack.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,6 +31,9 @@ public class JwtService {
     public String generateRefreshToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("type", "refresh");
+        claims.put("name", ((User) userDetails).getName());
+        claims.put("surname", ((User) userDetails).getSurname());
+        claims.put("uid", ((User) userDetails).getId());
         return buildToken(claims, userDetails, refreshExpiration);
     }
 
@@ -53,6 +57,9 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>(extraClaims);
         claims.put("type", "access");
+        claims.put("name", ((User) userDetails).getName());
+        claims.put("surname", ((User) userDetails).getSurname());
+        claims.put("uid", ((User) userDetails).getId());
         return buildToken(claims, userDetails, jwtExpiration);
     }
 
@@ -71,6 +78,25 @@ public class JwtService {
 
     public long getExpirationTime() {
         return jwtExpiration;
+    }
+
+    public UserDetails extractUserDetails(String token) {
+        Claims claims = extractAllClaims(token);
+        String username = claims.getSubject();
+        String name = claims.get("name", String.class);
+        String surname = claims.get("surname", String.class);
+        Integer uid = claims.get("uid", Integer.class);
+
+        return new User()
+                .setEmail(username)
+                .setName(name)
+                .setSurname(surname)
+                .setId(uid);
+    }
+
+    public Integer extractUserId(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("uid", Integer.class);
     }
 
     private String buildToken(
@@ -109,4 +135,5 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
 }

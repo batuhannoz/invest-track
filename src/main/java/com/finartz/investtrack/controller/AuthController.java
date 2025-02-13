@@ -8,7 +8,6 @@ import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.UserRepository;
 import com.finartz.investtrack.service.AuthService;
 import com.finartz.investtrack.service.JwtService;
-import com.finartz.investtrack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ public class AuthController {
     private JwtService jwtService;
 
     @Autowired
-    private AuthService authenticationService;
+    private AuthService authService;
 
     @Autowired
     private UserRepository userRepository;
@@ -32,14 +31,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserRequest registerUserRequest) {
-        User registeredUser = authenticationService.signup(registerUserRequest);
+        User registeredUser = authService.signup(registerUserRequest);
 
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserRequest loginUserRequest) {
-        User authenticatedUser = authenticationService.authenticate(loginUserRequest);
+        User authenticatedUser = authService.authenticate(loginUserRequest);
 
         String accessToken = jwtService.generateToken(authenticatedUser);
         String refreshToken = jwtService.generateRefreshToken(authenticatedUser);
