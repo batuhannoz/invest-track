@@ -10,7 +10,8 @@ Register a new user in the system.
 {
     "email": "string",
     "password": "string",
-    "name": "string"
+    "name": "string",
+    "surname": "string"
 }
 ```
 
@@ -20,6 +21,7 @@ Returns the created User object.
 {
     "id": "number",
     "name": "string",
+    "surname": "string",
     "email": "string",
     "createdAt": "timestamp",
     "updatedAt": "timestamp"
@@ -48,7 +50,9 @@ Authenticate a user and receive a JWT token.
 ```json
 {
     "token": "string",
-    "expiresIn": "number"
+    "expiresIn": "number",
+    "refreshToken": "string",
+    "refreshExpiresIn": "string"
 }
 ```
 
@@ -72,7 +76,9 @@ curl -X POST http://localhost:8080/auth/signup \
   -d '{
     "email": "user@example.com",
     "password": "password123",
-    "name": "John Doe"
+    "name": "John"
+    "surname": "Doe",
+
   }'
 ```
 
