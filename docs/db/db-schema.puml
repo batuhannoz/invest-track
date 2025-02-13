@@ -1,0 +1,94 @@
+@startuml
+
+' User Tablosu
+entity User {
+    + id : int [PK]
+    --
+    name : varchar(50)
+    surname : varchar(50)
+    password : varchar(255)
+    email : varchar(100)
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Card Tablosu
+entity Card {
+    + id : int [PK]
+    --
+    user_id : int [FK]
+    card_number : varchar(16)
+    card_holder_name : varchar(100)
+    expiration_date : varchar(5)
+    cvv : varchar(3)
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Stock Tablosu
+entity Stock {
+    + id : int [PK]
+    --
+    stock_symbol : varchar(10)
+    stock_name : varchar(100)
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Watchlist Tablosu
+entity Watchlist {
+    + id : int [PK]
+    --
+    user_id : int [FK]
+    stock_id : int [FK]
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Transaction Tablosu
+entity Transaction {
+    + id : int [PK]
+    --
+    user_id : int [FK]
+    stock_id : int [FK]
+    transaction_type : enum('buy', 'sell')
+    quantity : int
+    price : decimal(10, 2)
+    transaction_date : datetime
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Wallet Tablosu
+entity Wallet {
+    + id : int [PK]
+    --
+    user_id : int [FK]
+    balance : decimal(10, 2)
+    created_at : datetime
+    updated_at : datetime
+}
+
+' Portfolio Tablosu
+entity Portfolio {
+    + id : int [PK]
+    --
+    user_id : int [FK]
+    stock_id : int [FK]
+    quantity : int
+    average_price : decimal(10, 2)
+    created_at : datetime
+    updated_at : datetime
+}
+
+' İlişkiler
+User ||--o{ Card : "has"
+User ||--o{ Watchlist : "has"
+User ||--o{ Transaction : "has"
+User ||--o{ Wallet : "has"
+User ||--o{ Portfolio : "has"
+Stock ||--o{ Watchlist : "in"
+Stock ||--o{ Transaction : "in"
+Stock ||--o{ Portfolio : "in"
+
+@enduml
