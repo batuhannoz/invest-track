@@ -10,9 +10,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "users")
+@Table(name = "user")
 @Entity
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -20,6 +21,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String surname;
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
@@ -87,6 +91,15 @@ public class User implements UserDetails {
         return this;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public User setSurname(String surname) {
+        this.surname = surname;
+        return this;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -130,4 +143,5 @@ public class User implements UserDetails {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
 }

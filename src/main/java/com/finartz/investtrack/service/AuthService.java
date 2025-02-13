@@ -26,6 +26,7 @@ public class AuthService {
         var user = new User()
                 .setName(request.getName())
                 .setEmail(request.getEmail())
+                .setSurname(request.getSurname())
                 .setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userRepository.save(user);
