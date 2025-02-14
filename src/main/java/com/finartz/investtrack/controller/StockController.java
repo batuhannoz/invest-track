@@ -28,4 +28,24 @@ public class StockController {
         return new ResponseEntity<>(financeService.getStockPrice(symbol), HttpStatus.OK);
     }
 
+    @GetMapping("/{symbol}/historical/last-week")
+    public ResponseEntity<String> getStockHistoricalDataLastWeek(@PathVariable String symbol) {
+        return new ResponseEntity<>(financeService.getStockHistoricalDataLastWeek(symbol), HttpStatus.OK);
+    }
+
+    @GetMapping("/{symbol}/historical/last-month")
+    public ResponseEntity<String> getStockHistoricalDataLastMonth(@PathVariable String symbol) {
+        return new ResponseEntity<>(financeService.getStockHistoricalDataLastMonth(symbol), HttpStatus.OK);
+    }
+
+    @GetMapping("/{symbol}/historical/last-year")
+    public ResponseEntity<String> getStockHistoricalDataLastYear(@PathVariable String symbol) {
+        return new ResponseEntity<>(financeService.getStockHistoricalDataLastYear(symbol), HttpStatus.OK);
+    }
+
+    @GetMapping("/{symbol}/historical/last-five-years")
+    public ResponseEntity<String> getStockHistoricalDataLastFiveYears(@PathVariable String symbol) {
+        return new ResponseEntity<>(financeService.getStockHistoricalDataLastFiveYears(symbol), HttpStatus.OK);
+    }
+
 }

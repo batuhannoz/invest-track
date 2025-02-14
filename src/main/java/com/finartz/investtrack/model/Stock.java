@@ -21,6 +21,12 @@ public class Stock {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String exchange;
+
+    @Column(nullable = false, name = "image_url")
+    private String imageUrl;
+
     @CreationTimestamp
     @Column(nullable = false , name = "created_at")
     private LocalDateTime createdAt;

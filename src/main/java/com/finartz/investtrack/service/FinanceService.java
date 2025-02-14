@@ -1,11 +1,11 @@
 package com.finartz.investtrack.service;
 
-import com.finartz.investtrack.controller.response.StockSearchResponse;
 import okhttp3.HttpUrl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.LocalDate;
 
 @Service
 public class FinanceService {
@@ -31,6 +31,7 @@ public class FinanceService {
 
         return restTemplate.getForObject(url, String.class);
     }
+
 
     public String getCompanyInfo(String symbol) {
         String url = new HttpUrl.Builder()
@@ -60,4 +61,67 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    public String getStockHistoricalDataLastWeek(String symbol) {
+        String url = new HttpUrl.Builder()
+                .scheme("https")
+                .host(baseUrl)
+                .addPathSegment("api")
+                .addPathSegment("v3")
+                .addPathSegment("historical-price-full")
+                .addPathSegment(symbol)
+                .addQueryParameter("from", LocalDate.now().minusWeeks(1).toString())
+                .addQueryParameter("to", LocalDate.now().toString())
+                .addQueryParameter("apikey", apiKey)
+                .build().toString();
+
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getStockHistoricalDataLastMonth(String symbol) {
+        String url = new HttpUrl.Builder()
+                .scheme("https")
+                .host(baseUrl)
+                .addPathSegment("api")
+                .addPathSegment("v3")
+                .addPathSegment("historical-price-full")
+                .addPathSegment(symbol)
+                .addQueryParameter("from", LocalDate.now().minusMonths(1).toString())
+                .addQueryParameter("to", LocalDate.now().toString())
+                .addQueryParameter("apikey", apiKey)
+                .build().toString();
+
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getStockHistoricalDataLastYear(String symbol) {
+        String url = new HttpUrl.Builder()
+                .scheme("https")
+                .host(baseUrl)
+                .addPathSegment("api")
+                .addPathSegment("v3")
+                .addPathSegment("historical-price-full")
+                .addPathSegment(symbol)
+                .addQueryParameter("from", LocalDate.now().minusYears(1).toString())
+                .addQueryParameter("to", LocalDate.now().toString())
+                .addQueryParameter("apikey", apiKey)
+                .build().toString();
+
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getStockHistoricalDataLastFiveYears(String symbol) {
+        String url = new HttpUrl.Builder()
+                .scheme("https")
+                .host(baseUrl)
+                .addPathSegment("api")
+                .addPathSegment("v3")
+                .addPathSegment("historical-price-full")
+                .addPathSegment(symbol)
+                .addQueryParameter("from", LocalDate.now().minusYears(5).toString())
+                .addQueryParameter("to", LocalDate.now().toString())
+                .addQueryParameter("apikey", apiKey)
+                .build().toString();
+
+        return restTemplate.getForObject(url, String.class);
+    }
 }

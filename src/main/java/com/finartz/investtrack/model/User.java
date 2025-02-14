@@ -44,6 +44,7 @@ public class User implements UserDetails {
         return List.of();
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -111,24 +112,6 @@ public class User implements UserDetails {
 
     public User setPassword(String password) {
         this.password = password;
-        return this;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public User setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public User setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
         return this;
     }
 

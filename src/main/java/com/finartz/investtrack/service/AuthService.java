@@ -22,14 +22,18 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private WalletService walletService;
+
     public User signup(RegisterUserRequest request) {
         var user = new User()
                 .setName(request.getName())
                 .setEmail(request.getEmail())
                 .setSurname(request.getSurname())
                 .setPassword(passwordEncoder.encode(request.getPassword()));
-
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        walletService.createWalletForUser(user);
+        return user;
     }
 
     public User authenticate(LoginUserRequest request) {
