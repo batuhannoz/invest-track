@@ -7,14 +7,8 @@
 **Response:**
 ```json
 {
-  "id": 1,
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-  },
   "balance": 100.00,
-  "currency": "USD",
+  "currency": "USD"
 }
 ```
 ## Withdraw from Wallet
@@ -25,14 +19,8 @@
 **Response:**
 ```json
 {
-  "id": 1,
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-  },
   "balance": 50.00,
-  "currency": "USD",
+  "currency": "USD"
 }
 ```
 ## Get Wallet
@@ -41,13 +29,7 @@
 **Response:**
 ```json
 {
-  "id": 1,
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-  },
   "balance": 50.00,
-  "currency": "USD",
+  "currency": "USD"
 }
 ```
