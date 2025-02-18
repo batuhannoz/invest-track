@@ -10,6 +10,15 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CardService cardService;
+
+    public User createUser(User user) {
+        User savedUser = userRepository.save(user);
+        cardService.createRandomCard(savedUser);
+        return savedUser;
+    }
     
     public User updateUser(Integer uid, User updatedUser) {
         User currentUser = userRepository.findById(uid)
@@ -25,6 +34,10 @@ public class UserService {
     public User getUserById(Integer uid) {
         return userRepository.findById(uid)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 }

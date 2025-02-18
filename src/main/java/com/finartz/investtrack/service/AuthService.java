@@ -3,7 +3,6 @@ package com.finartz.investtrack.service;
 import com.finartz.investtrack.controller.request.LoginUserRequest;
 import com.finartz.investtrack.controller.request.RegisterUserRequest;
 import com.finartz.investtrack.model.User;
-import com.finartz.investtrack.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,7 +30,7 @@ public class AuthService {
                 .setEmail(request.getEmail())
                 .setSurname(request.getSurname())
                 .setPassword(passwordEncoder.encode(request.getPassword()));
-        user = userRepository.save(user);
+        user = userService.createUser(user);
         walletService.createWalletForUser(user);
         return user;
     }
@@ -44,7 +43,7 @@ public class AuthService {
                 )
         );
 
-        return userRepository.findByEmail(request.getEmail()).orElseThrow();
+        return userService.getUserByEmail(request.getEmail());
     }
 
 }

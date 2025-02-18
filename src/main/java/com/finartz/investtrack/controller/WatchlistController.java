@@ -69,7 +69,7 @@ public class WatchlistController {
     @DeleteMapping("/{watchlistId}")
     public ResponseEntity<Void> deleteWatchlist(@PathVariable int watchlistId) {
         watchlistService.deleteWatchlist(watchlistId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 }
