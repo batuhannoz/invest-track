@@ -6,6 +6,9 @@
 
 **Method:** `PUT`
 
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Request Body:**
 ```json
 {
@@ -31,6 +34,9 @@
 **Endpoint:** `/user/profile`
 
 **Method:** `GET`
+
+**Headers:**
+- `Authorization`: Bearer token required
 
 **Response:**
 ```json

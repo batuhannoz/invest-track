@@ -9,6 +9,9 @@
 **Query Parameters:**
 - `keyword`: The keyword to search for stocks.
 
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 [
@@ -30,6 +33,10 @@
 
 **Path Parameters:**
 - `symbol`: The stock symbol.
+
+**Headers:**
+- `Authorization`: Bearer token required
+
 
 **Response:**
 ```json
@@ -84,6 +91,9 @@
 **Path Parameters:**
 - `symbol`: The stock symbol.
 
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 [
@@ -123,6 +133,9 @@
 **Path Parameters:**
 - `symbol`: The stock symbol.
 
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 {
@@ -156,6 +169,9 @@
 
 **Path Parameters:**
 - `symbol`: The stock symbol.
+
+**Headers:**
+- `Authorization`: Bearer token required
 
 **Response:**
 ```json
@@ -191,6 +207,9 @@
 **Path Parameters:**
 - `symbol`: The stock symbol.
 
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 {
@@ -224,6 +243,9 @@
 
 **Path Parameters:**
 - `symbol`: The stock symbol.
+
+**Headers:**
+- `Authorization`: Bearer token required
 
 **Response:**
 ```json

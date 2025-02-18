@@ -148,8 +148,13 @@
     "name": "My Watchlist",
     "stocks": [
         {
-            "symbol": "AAPL",
-            "name": "Apple Inc."
+          "id": 1,
+          "symbol": "AAPL",
+          "name": "Apple Inc.",
+          "exchange": "NASDAQ Global Select",
+          "imageUrl": "https://images.financialmodelingprep.com/symbol/AAPL.png",
+          "createdAt": "2025-02-18T12:01:21.849122",
+          "updatedAt": "2025-02-18T12:01:21.849181"
         }
     ],
     "createdAt": "2024-02-14T10:00:00Z",

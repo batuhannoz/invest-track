@@ -1,9 +1,15 @@
 # Wallet API Documentation
 ## Deposit to Wallet
 **Endpoint:** `/wallet/deposit`
+
 **Method:** `POST`
+
 **Request Parameters:**
 - `amount` (BigDecimal): The amount to deposit.
+
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 {
@@ -13,9 +19,15 @@
 ```
 ## Withdraw from Wallet
 **Endpoint:** `/wallet/withdraw`
+
 **Method:** `POST`
+
 **Request Parameters:**
 - `amount` (BigDecimal): The amount to withdraw.
+
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 {
@@ -25,7 +37,12 @@
 ```
 ## Get Wallet
 **Endpoint:** `/wallet`
+
 **Method:** `GET`
+
+**Headers:**
+- `Authorization`: Bearer token required
+
 **Response:**
 ```json
 {

@@ -2,7 +2,11 @@
 
 ## Get Top Currencies Exchange Rate
 **Endpoint:** `/currency`
+
 **Method:** `GET`
+
+**Headers:**
+- `Authorization`: Bearer token required
 **Response:**
 ```json
 [
