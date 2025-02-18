@@ -11,16 +11,16 @@
 ```json
 [
   {
-    "code": "USD",
-    "rate": 1
+    "currencyCode": "USD",
+    "exchangeRate": 1
   },
   {
-    "code": "EUR",
-    "rate": 0.95
+    "currencyCode": "EUR",
+    "exchangeRate": 0.95
   },
   {
-    "code": "TRY",
-    "rate": 36.23
+    "currencyCode": "TRY",
+    "exchangeRate": 36.23
   },
   {...}
 ]
