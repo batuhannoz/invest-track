@@ -1,7 +1,7 @@
 # Currency API Documentation
 
 ## Get Top Currencies Exchange Rate
-**Endpoint:** `/currency`
+**Endpoint:** `/currency/top`
 
 **Method:** `GET`
 
