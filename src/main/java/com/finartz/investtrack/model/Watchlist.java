@@ -1,5 +1,6 @@
 package com.finartz.investtrack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,10 +18,11 @@ public class Watchlist {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(nullable = false, name = "stock_id")
+    @Column(nullable = false, name = "stock")
     private List<Stock> stock;
 
     @Column(nullable = false)

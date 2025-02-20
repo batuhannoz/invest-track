@@ -10,6 +10,7 @@ import com.finartz.investtrack.service.JwtService;
 import com.finartz.investtrack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +29,14 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping(path = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> register(@RequestBody RegisterUserRequest registerUserRequest) {
         User registeredUser = authService.signup(registerUserRequest);
 
         return ResponseEntity.ok(registeredUser);
     }
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserRequest loginUserRequest) {
         User authenticatedUser = authService.authenticate(loginUserRequest);
 
@@ -51,7 +52,7 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @PostMapping("/refresh")
+    @PostMapping(path = "/refresh", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<LoginResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         String refreshToken = request.getRefreshToken();
         String username = jwtService.extractUsername(refreshToken);

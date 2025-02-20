@@ -1,12 +1,12 @@
 package com.finartz.investtrack.service;
 
 import com.finartz.investtrack.controller.response.WatchlistResponse;
+import com.finartz.investtrack.exception.StockNotFoundException;
 import com.finartz.investtrack.model.Stock;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.model.Watchlist;
 import com.finartz.investtrack.repository.StockRepository;
 import com.finartz.investtrack.repository.WatchlistRepository;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,6 @@ public class WatchlistService {
     @Autowired
     private FinanceService financeService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-
     public WatchlistResponse createWatchlist(User user, String name) {
         Watchlist watchlist = new Watchlist();
         watchlist.setUser(user);
@@ -48,7 +44,7 @@ public class WatchlistService {
                 .orElseThrow(() -> new EntityNotFoundException("Watchlist not found"));
 
         Stock stock = stockRepository.findBySymbol(stockSymbol.toUpperCase(Locale.US))
-                .orElseGet(() -> createStockFromAPI(stockSymbol));
+                .orElseGet(() -> financeService.createStockFromAPI(stockSymbol));
 
         if (!watchlist.getStock().contains(stock)) {
             watchlist.getStock().add(stock);
@@ -63,7 +59,7 @@ public class WatchlistService {
                 .orElseThrow(() -> new EntityNotFoundException("Watchlist not found"));
 
         Stock stock = stockRepository.findBySymbol(stockSymbol.toUpperCase(Locale.US))
-                .orElseThrow(() -> new EntityNotFoundException("Stock not found"));
+                .orElseThrow(() -> new StockNotFoundException("Stock not found"));
 
         watchlist.getStock().remove(stock);
         return WatchlistResponse.fromEntity(watchlistRepository.save(watchlist));
@@ -76,28 +72,6 @@ public class WatchlistService {
 
         watchlist.setName(newName);
         return WatchlistResponse.fromEntity(watchlistRepository.save(watchlist));
-    }
-
-    private Stock createStockFromAPI(String symbol) {
-        try {
-            String companyInfo = financeService.getCompanyInfo(symbol);
-            JsonNode jsonNode = objectMapper.readTree(companyInfo);
-            
-            if (jsonNode.isArray() && jsonNode.size() > 0) {
-                JsonNode companyData = jsonNode.get(0);
-                
-                Stock stock = new Stock();
-                stock.setSymbol(companyData.get("symbol").asText());
-                stock.setName(companyData.get("companyName").asText());
-                stock.setExchange(companyData.get("exchange").asText());
-                stock.setImageUrl(companyData.get("image").asText());
-                
-                return stockRepository.save(stock);
-            }
-            throw new RuntimeException("Company information not found");
-        } catch (Exception e) {
-            throw new RuntimeException("Error creating stock: " + e.getMessage());
-        }
     }
 
     public List<WatchlistResponse> getUserWatchlist(User user) {

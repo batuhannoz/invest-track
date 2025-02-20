@@ -1,5 +1,7 @@
 package com.finartz.investtrack.controller.response;
 
+import org.springframework.http.HttpStatus;
+
 public class ErrorResponse {
 
     private String message;
@@ -8,9 +10,9 @@ public class ErrorResponse {
 
     private String code;
 
-    public ErrorResponse(String code, String error, String message) {
+    public ErrorResponse(HttpStatus code, String error, String message) {
         this.message = message;
-        this.code = code;
+        this.code = code.toString();
         this.error = error;
     }
 

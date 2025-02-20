@@ -1,5 +1,6 @@
 package com.finartz.investtrack.service;
 
+import com.finartz.investtrack.exception.UserNotFoundException;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserService {
     
     public User updateUser(Integer uid, User updatedUser) {
         User currentUser = userRepository.findById(uid)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         return userRepository.save(currentUser
                 .setName(updatedUser.getName())
@@ -33,11 +34,11 @@ public class UserService {
     
     public User getUserById(Integer uid) {
         return userRepository.findById(uid)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
 }

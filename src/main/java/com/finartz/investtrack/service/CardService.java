@@ -1,5 +1,7 @@
 package com.finartz.investtrack.service;
 
+import com.finartz.investtrack.exception.CardNotFoundException;
+import com.finartz.investtrack.exception.UserNotFoundException;
 import com.finartz.investtrack.model.Card;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.CardRepository;
@@ -37,9 +39,9 @@ public class CardService {
 
     public Card getCardByIdAndUser(Integer cardId, Integer userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return cardRepository.findByIdAndUser(cardId, user)
-                .orElseThrow(() -> new RuntimeException("Card not found"));
+                .orElseThrow(() -> new CardNotFoundException("Card not found"));
     }
 
     public void deleteCardByIdAndUser(Integer cardId, Integer userId) {

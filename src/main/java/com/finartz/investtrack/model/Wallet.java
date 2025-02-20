@@ -1,5 +1,6 @@
 package com.finartz.investtrack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +20,7 @@ public class Wallet {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user")
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false)

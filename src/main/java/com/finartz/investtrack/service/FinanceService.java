@@ -1,7 +1,13 @@
 package com.finartz.investtrack.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finartz.investtrack.model.Stock;
+import com.finartz.investtrack.repository.StockRepository;
 import okhttp3.HttpUrl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,8 +22,15 @@ public class FinanceService {
     @Value("${fmp.base-url}")
     private String baseUrl;
 
+    @Autowired
+    private StockRepository stockRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
+    @Cacheable(value = "stocksCache", key = "#keyword")
     public String searchStocks(String keyword) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
@@ -123,6 +136,27 @@ public class FinanceService {
                 .build().toString();
 
         return restTemplate.getForObject(url, String.class);
+    }
+
+    public Stock createStockFromAPI(String symbol) {
+        try {
+            String companyInfo = getCompanyInfo(symbol);
+            JsonNode jsonNode = objectMapper.readTree(companyInfo);
+
+            if (jsonNode.isArray() && !jsonNode.isEmpty()) {
+                JsonNode companyData = jsonNode.get(0);
+
+                Stock stock = new Stock();
+                stock.setSymbol(companyData.get("symbol").asText());
+                stock.setName(companyData.get("companyName").asText());
+                stock.setExchange(companyData.get("exchange").asText());
+                stock.setImageUrl(companyData.get("image").asText());
+                return stockRepository.save(stock);
+            }
+            throw new RuntimeException("Company information not found");
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating stock: " + e.getMessage());
+        }
     }
 
 }
