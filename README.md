@@ -1,6 +1,11 @@
 # invest-track
 A portfolio and stock market tracking app that provides real-time market data and investment performance analysis to help users make informed financial decisions.
 
+## TODO
+- Implement real-time stock price updates using WebSocket connections
+- Add comprehensive unit tests for all service layers
+- Integrate proper logging system for better monitoring and debugging
+
 ## Database
 - [Database Schema](docs/db/db-schema.png)
 
@@ -51,8 +56,3 @@ http://localhost:8080
 - Development mode: `docker compose down`
 - Production mode: `docker compose -f compose.prod.yaml down`
 - To remove all data including volumes add `-v` flag to down commands
-
-## TODO
-- Implement WebSocket integration for real-time stock price updates
-- Add comprehensive unit tests for all services and controllers
-- Set up proper logging system with different log levels
