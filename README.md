@@ -1,6 +1,20 @@
 # invest-track
 A portfolio and stock market tracking app that provides real-time market data and investment performance analysis to help users make informed financial decisions.
 
+## Database
+- [Database Schema](docs/db/db-schema.png)
+
+## API Documentation
+- Auth
+  - [Authentication Flow](docs/api/auth/auth-flow.png)
+  - [Authentication API](docs/api/auth/auth-api.md)
+- [Currency API](docs/api/currency/currency-api.md)
+- [Stock API](docs/api/stock/stock-api.md)
+- [User API](docs/api/user/user-api.md)
+- [Wallet API](docs/api/wallet/wallet-api.md)
+- [Watchlist API](docs/api/watchlist/watchlist-api.md)
+
+
 ## Prerequisites
 - Docker
 - Docker Compose
