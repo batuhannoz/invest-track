@@ -51,3 +51,8 @@ http://localhost:8080
 - Development mode: `docker compose down`
 - Production mode: `docker compose -f compose.prod.yaml down`
 - To remove all data including volumes add `-v` flag to down commands
+
+## TODO
+- Implement WebSocket integration for real-time stock price updates
+- Add comprehensive unit tests for all services and controllers
+- Set up proper logging system with different log levels
