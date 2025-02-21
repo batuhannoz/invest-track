@@ -19,6 +19,7 @@ A portfolio and stock market tracking app that provides real-time market data an
 - [Wallet API](docs/api/wallet/wallet-api.md)
 - [Watchlist API](docs/api/watchlist/watchlist-api.md)
 - [Transaction API](docs/api/transaction/transaction-api.md)
+- [Portfolio API](docs/api/portfolio/portfolio-api.md)
 
 
 ## Prerequisites
