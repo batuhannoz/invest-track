@@ -45,7 +45,7 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
-
+    @Cacheable(value = "companyInfoCache", key = "#symbol")
     public String getCompanyInfo(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
@@ -60,7 +60,8 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
-    public String getStockPrice(String symbol) {
+    @Cacheable(value = "stockPriceCache", key = "#symbol")
+        public String getStockPrice(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
                 .host(baseUrl)
@@ -74,6 +75,7 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    @Cacheable(value = "historicalWeekCache", key = "#symbol")
     public String getStockHistoricalDataLastWeek(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
@@ -90,6 +92,7 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    @Cacheable(value = "historicalMonthCache", key = "#symbol")
     public String getStockHistoricalDataLastMonth(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
@@ -106,6 +109,7 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    @Cacheable(value = "historicalYearCache", key = "#symbol")
     public String getStockHistoricalDataLastYear(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
@@ -122,6 +126,7 @@ public class FinanceService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    @Cacheable(value = "historicalFiveYearsCache", key = "#symbol")
     public String getStockHistoricalDataLastFiveYears(String symbol) {
         String url = new HttpUrl.Builder()
                 .scheme("https")
