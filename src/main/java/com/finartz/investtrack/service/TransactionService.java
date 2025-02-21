@@ -7,7 +7,6 @@ import com.finartz.investtrack.model.*;
 import com.finartz.investtrack.repository.PortfolioRepository;
 import com.finartz.investtrack.repository.StockRepository;
 import com.finartz.investtrack.repository.TransactionRepository;
-import com.finartz.investtrack.repository.WalletRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +30,13 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private WalletRepository walletRepository;
-
-    @Autowired
     private PortfolioRepository portfolioRepository;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private WalletService walletService;
 
     public List<Transaction> getUserTransactions(int userId) {
         User user = userService.getUserById(userId);
@@ -91,11 +89,7 @@ public class TransactionService {
         portfolio.setQuantity(newQuantity);
         portfolioRepository.save(portfolio);
 
-        Wallet wallet = walletRepository.findByUser(user)
-                .orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
-
-        wallet.setBalance(wallet.getBalance().add(totalEarnings));
-        walletRepository.save(wallet);
+        walletService.handleStockSale(user, totalEarnings, upperSymbol);
 
         Transaction transaction = new Transaction(user, stock, Transaction.TransactionType.SELL, quantity, currentPrice);
         transactionRepository.save(transaction);
@@ -128,15 +122,7 @@ public class TransactionService {
 
         BigDecimal totalCost = currentPrice.multiply(quantity);
 
-        Wallet wallet = walletRepository.findByUser(user)
-                .orElseThrow(() -> new WalletNotFoundException("Wallet not found"));
-
-        if (wallet.getBalance().compareTo(totalCost) < 0) {
-            throw new InsufficientFundsException("Insufficient balance");
-        }
-
-        wallet.setBalance(wallet.getBalance().subtract(totalCost));
-        walletRepository.save(wallet);
+        walletService.handleStockPurchase(user, totalCost, upperSymbol);
 
         Transaction transaction = new Transaction(user, stock, Transaction.TransactionType.BUY, quantity, currentPrice);
         transactionRepository.save(transaction);
