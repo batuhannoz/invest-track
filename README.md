@@ -5,6 +5,7 @@ A portfolio and stock market tracking app that provides real-time market data an
 - Implement real-time stock price updates using WebSocket connections
 - Add comprehensive unit tests for all service layers
 - Integrate proper logging system for better monitoring and debugging
+- Add pagination to end points returning list
 
 ## Database
 - [Database Schema](docs/db/db-schema.png)
