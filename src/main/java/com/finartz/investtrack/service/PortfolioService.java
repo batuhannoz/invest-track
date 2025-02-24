@@ -3,7 +3,6 @@ package com.finartz.investtrack.service;
 import com.finartz.investtrack.model.Portfolio;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.PortfolioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,11 +12,14 @@ import java.util.stream.Collectors;
 @Service
 public class PortfolioService {
 
-    @Autowired
-    private PortfolioRepository portfolioRepository;
+    private final PortfolioRepository portfolioRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public PortfolioService(PortfolioRepository portfolioRepository, UserService userService) {
+        this.portfolioRepository = portfolioRepository;
+        this.userService = userService;
+    }
 
     public List<Portfolio> getUserPortfolio(int userId) {
         User user = userService.getUserById(userId);

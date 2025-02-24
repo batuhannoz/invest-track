@@ -3,17 +3,19 @@ package com.finartz.investtrack.service;
 import com.finartz.investtrack.exception.UserNotFoundException;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
+
+    public UserService(UserRepository userRepository, CardService cardService) {
+        this.userRepository = userRepository;
+        this.cardService = cardService;
+    }
 
     public User createUser(User user) {
         User savedUser = userRepository.save(user);

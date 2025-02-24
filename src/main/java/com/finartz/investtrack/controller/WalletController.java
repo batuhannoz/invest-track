@@ -4,7 +4,6 @@ import com.finartz.investtrack.model.Wallet;
 import com.finartz.investtrack.service.WalletService;
 import com.finartz.investtrack.model.WalletTransaction;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/wallet")
 public class WalletController {
 
-    @Autowired
-    private WalletService walletService;
+    private final WalletService walletService;
+
+    public WalletController(WalletService walletService) {
+        this.walletService = walletService;
+    }
 
     @PostMapping("/deposit")
     public ResponseEntity<Wallet> deposit(HttpServletRequest request, @RequestParam BigDecimal amount) {

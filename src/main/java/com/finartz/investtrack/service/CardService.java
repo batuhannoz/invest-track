@@ -6,7 +6,6 @@ import com.finartz.investtrack.model.Card;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.repository.CardRepository;
 import com.finartz.investtrack.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,11 +15,14 @@ import java.util.Random;
 @Service
 public class CardService {
 
-    @Autowired
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CardService(CardRepository cardRepository, UserRepository userRepository) {
+        this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
+    }
 
     public Card createRandomCard(User user) {
         Card card = new Card()

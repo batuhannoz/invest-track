@@ -5,7 +5,6 @@ import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.service.UserService;
 import com.finartz.investtrack.service.WatchlistService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,14 @@ import java.util.List;
 @RequestMapping("/watchlist")
 public class WatchlistController {
 
-    @Autowired
-    private WatchlistService watchlistService;
+    private final WatchlistService watchlistService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public WatchlistController(WatchlistService watchlistService, UserService userService) {
+        this.watchlistService = watchlistService;
+        this.userService = userService;
+    }
 
     @PostMapping
     public ResponseEntity<WatchlistResponse> createWatchlist(

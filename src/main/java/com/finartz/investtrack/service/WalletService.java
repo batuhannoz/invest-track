@@ -6,7 +6,6 @@ import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.model.Wallet;
 import com.finartz.investtrack.repository.WalletRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,14 +16,21 @@ import com.finartz.investtrack.repository.WalletTransactionRepository;
 @Service
 public class WalletService {
 
-    @Autowired
-    private WalletRepository walletRepository;
+    private final WalletRepository walletRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private WalletTransactionRepository walletTransactionRepository;
+    private final WalletTransactionRepository walletTransactionRepository;
+
+    public WalletService(
+            WalletRepository walletRepository,
+            UserService userService,
+            WalletTransactionRepository walletTransactionRepository
+    ) {
+        this.walletRepository = walletRepository;
+        this.userService = userService;
+        this.walletTransactionRepository = walletTransactionRepository;
+    }
 
     public Wallet createWalletForUser(User user) {
         Wallet wallet = new Wallet();

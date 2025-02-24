@@ -9,7 +9,6 @@ import com.finartz.investtrack.repository.StockRepository;
 import com.finartz.investtrack.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,23 +19,33 @@ import java.util.Locale;
 @Service
 public class TransactionService {
 
-    @Autowired
-    private FinanceService financeService;
+    private final FinanceService financeService;
 
-    @Autowired
-    private StockRepository stockRepository;
+    private final StockRepository stockRepository;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private PortfolioRepository portfolioRepository;
+    private final PortfolioRepository portfolioRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private WalletService walletService;
+    private final WalletService walletService;
+
+    public TransactionService(
+            FinanceService financeService,
+            StockRepository stockRepository,
+            TransactionRepository transactionRepository,
+            PortfolioRepository portfolioRepository,
+            UserService userService,
+            WalletService walletService
+    ) {
+        this.financeService = financeService;
+        this.stockRepository = stockRepository;
+        this.transactionRepository = transactionRepository;
+        this.portfolioRepository = portfolioRepository;
+        this.userService = userService;
+        this.walletService = walletService;
+    }
 
     public List<Transaction> getUserTransactions(int userId) {
         User user = userService.getUserById(userId);

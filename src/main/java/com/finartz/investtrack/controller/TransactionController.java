@@ -3,7 +3,6 @@ package com.finartz.investtrack.controller;
 import com.finartz.investtrack.model.Transaction;
 import com.finartz.investtrack.service.TransactionService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/transaction")
 public class TransactionController {
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping("")
     public ResponseEntity<List<Transaction>> getUserTransactions(HttpServletRequest request) {

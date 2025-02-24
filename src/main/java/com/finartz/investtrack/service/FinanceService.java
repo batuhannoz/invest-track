@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finartz.investtrack.model.Stock;
 import com.finartz.investtrack.repository.StockRepository;
 import okhttp3.HttpUrl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,13 +21,17 @@ public class FinanceService {
     @Value("${fmp.base-url}")
     private String baseUrl;
 
-    @Autowired
-    private StockRepository stockRepository;
+    private final StockRepository stockRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
+    public FinanceService(StockRepository stockRepository, ObjectMapper objectMapper) {
+        this.stockRepository = stockRepository;
+        this.objectMapper = objectMapper;
+        this.restTemplate = new RestTemplate();
+    }
 
     @Cacheable(value = "stocksCache", key = "#keyword")
     public String searchStocks(String keyword) {

@@ -3,7 +3,6 @@ package com.finartz.investtrack.service;
 import com.finartz.investtrack.model.request.LoginUserRequest;
 import com.finartz.investtrack.model.request.RegisterUserRequest;
 import com.finartz.investtrack.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,17 +11,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private WalletService walletService;
+    private final WalletService walletService;
+
+    public AuthService(
+            UserService userService,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            WalletService walletService
+    ) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.walletService = walletService;
+    }
 
     public User signup(RegisterUserRequest request) {
         var user = new User()

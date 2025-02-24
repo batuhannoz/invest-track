@@ -1,7 +1,6 @@
 package com.finartz.investtrack.controller;
 
 import com.finartz.investtrack.service.FinanceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/stock")
 public class StockController {
 
-    @Autowired
-    private FinanceService financeService;
+    private final FinanceService financeService;
+
+    public StockController(FinanceService financeService) {
+        this.financeService = financeService;
+    }
 
     @GetMapping("/search")
     public ResponseEntity<String> searchStock(@RequestParam String keyword) {

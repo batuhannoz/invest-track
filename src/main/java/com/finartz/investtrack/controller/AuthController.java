@@ -8,7 +8,6 @@ import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.service.AuthService;
 import com.finartz.investtrack.service.JwtService;
 import com.finartz.investtrack.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +19,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AuthController(JwtService jwtService, AuthService authService, UserService userService) {
+        this.jwtService = jwtService;
+        this.authService = authService;
+        this.userService = userService;
+    }
 
     @PostMapping(path = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> register(@RequestBody RegisterUserRequest registerUserRequest) {

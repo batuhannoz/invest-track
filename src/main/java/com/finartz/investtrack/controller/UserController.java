@@ -5,7 +5,6 @@ import com.finartz.investtrack.service.UserService;
 import com.finartz.investtrack.model.Card;
 import com.finartz.investtrack.service.CardService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,11 +21,14 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
+
+    public UserController(UserService userService, CardService cardService) {
+        this.userService = userService;
+        this.cardService = cardService;
+    }
 
     @PutMapping("/update")
     public ResponseEntity<User> updateUser(

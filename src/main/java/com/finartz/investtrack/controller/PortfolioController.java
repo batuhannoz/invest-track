@@ -3,7 +3,6 @@ package com.finartz.investtrack.controller;
 import com.finartz.investtrack.model.Portfolio;
 import com.finartz.investtrack.service.PortfolioService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/portfolio")
 public class PortfolioController {
 
-    @Autowired
-    private PortfolioService portfolioService;
+    private final PortfolioService portfolioService;
+
+    public PortfolioController(PortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<Portfolio>> getUserPortfolio(HttpServletRequest request) {

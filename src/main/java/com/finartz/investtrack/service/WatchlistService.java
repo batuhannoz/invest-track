@@ -8,7 +8,6 @@ import com.finartz.investtrack.model.Watchlist;
 import com.finartz.investtrack.repository.StockRepository;
 import com.finartz.investtrack.repository.WatchlistRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +19,21 @@ import java.util.stream.Collectors;
 @Service
 public class WatchlistService {
 
-    @Autowired
-    private WatchlistRepository watchlistRepository;
+    private final WatchlistRepository watchlistRepository;
 
-    @Autowired
-    private StockRepository stockRepository;
+    private final StockRepository stockRepository;
 
-    @Autowired
-    private FinanceService financeService;
+    private final FinanceService financeService;
+
+    public WatchlistService(
+            WatchlistRepository watchlistRepository,
+            StockRepository stockRepository,
+            FinanceService financeService
+    ) {
+        this.watchlistRepository = watchlistRepository;
+        this.stockRepository = stockRepository;
+        this.financeService = financeService;
+    }
 
     public WatchlistResponse createWatchlist(User user, String name) {
         Watchlist watchlist = new Watchlist();
