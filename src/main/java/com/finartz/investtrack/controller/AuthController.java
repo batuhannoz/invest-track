@@ -1,9 +1,9 @@
 package com.finartz.investtrack.controller;
 
-import com.finartz.investtrack.controller.request.RefreshTokenRequest;
-import com.finartz.investtrack.controller.response.LoginResponse;
-import com.finartz.investtrack.controller.request.LoginUserRequest;
-import com.finartz.investtrack.controller.request.RegisterUserRequest;
+import com.finartz.investtrack.model.request.RefreshTokenRequest;
+import com.finartz.investtrack.model.response.LoginResponse;
+import com.finartz.investtrack.model.request.LoginUserRequest;
+import com.finartz.investtrack.model.request.RegisterUserRequest;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.service.AuthService;
 import com.finartz.investtrack.service.JwtService;

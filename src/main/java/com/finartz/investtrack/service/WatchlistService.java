@@ -1,13 +1,12 @@
 package com.finartz.investtrack.service;
 
-import com.finartz.investtrack.controller.response.WatchlistResponse;
+import com.finartz.investtrack.model.response.WatchlistResponse;
 import com.finartz.investtrack.exception.StockNotFoundException;
 import com.finartz.investtrack.model.Stock;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.model.Watchlist;
 import com.finartz.investtrack.repository.StockRepository;
 import com.finartz.investtrack.repository.WatchlistRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

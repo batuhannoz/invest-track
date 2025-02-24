@@ -1,7 +1,7 @@
 package com.finartz.investtrack.exception;
 
 
-import com.finartz.investtrack.controller.response.ErrorResponse;
+import com.finartz.investtrack.model.response.ErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;

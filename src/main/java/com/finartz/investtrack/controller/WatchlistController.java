@@ -1,6 +1,6 @@
 package com.finartz.investtrack.controller;
 
-import com.finartz.investtrack.controller.response.WatchlistResponse;
+import com.finartz.investtrack.model.response.WatchlistResponse;
 import com.finartz.investtrack.model.User;
 import com.finartz.investtrack.service.UserService;
 import com.finartz.investtrack.service.WatchlistService;

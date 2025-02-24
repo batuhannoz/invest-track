@@ -1,4 +1,4 @@
-package com.finartz.investtrack.controller.response;
+package com.finartz.investtrack.model.response;
 
 public class CurrencyResponse {
 

@@ -1,4 +1,4 @@
-package com.finartz.investtrack.controller.request;
+package com.finartz.investtrack.model.request;
 
 public class LoginUserRequest {
     private String email;

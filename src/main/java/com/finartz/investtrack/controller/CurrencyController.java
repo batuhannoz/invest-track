@@ -1,6 +1,6 @@
 package com.finartz.investtrack.controller;
 
-import com.finartz.investtrack.controller.response.CurrencyResponse;
+import com.finartz.investtrack.model.response.CurrencyResponse;
 import com.finartz.investtrack.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

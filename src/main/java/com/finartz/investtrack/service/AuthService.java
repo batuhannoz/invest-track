@@ -1,7 +1,7 @@
 package com.finartz.investtrack.service;
 
-import com.finartz.investtrack.controller.request.LoginUserRequest;
-import com.finartz.investtrack.controller.request.RegisterUserRequest;
+import com.finartz.investtrack.model.request.LoginUserRequest;
+import com.finartz.investtrack.model.request.RegisterUserRequest;
 import com.finartz.investtrack.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
