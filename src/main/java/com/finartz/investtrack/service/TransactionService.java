@@ -10,6 +10,8 @@ import com.finartz.investtrack.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.kafka.core.KafkaTemplate;
+import com.finartz.investtrack.config.KafkaConfig;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,13 +33,16 @@ public class TransactionService {
 
     private final WalletService walletService;
 
+    private final KafkaTemplate<String, Transaction> kafkaTemplate;
+
     public TransactionService(
             FinanceService financeService,
             StockRepository stockRepository,
             TransactionRepository transactionRepository,
             PortfolioRepository portfolioRepository,
             UserService userService,
-            WalletService walletService
+            WalletService walletService,
+            KafkaTemplate<String, Transaction> kafkaTemplate
     ) {
         this.financeService = financeService;
         this.stockRepository = stockRepository;
@@ -45,6 +50,7 @@ public class TransactionService {
         this.portfolioRepository = portfolioRepository;
         this.userService = userService;
         this.walletService = walletService;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public List<Transaction> getUserTransactions(int userId) {
@@ -102,7 +108,9 @@ public class TransactionService {
 
         Transaction transaction = new Transaction(user, stock, Transaction.TransactionType.SELL, quantity, currentPrice);
         transactionRepository.save(transaction);
-
+        
+        kafkaTemplate.send(KafkaConfig.TRANSACTION_TOPIC, transaction);
+        
         return transaction;
     }
 
@@ -135,7 +143,9 @@ public class TransactionService {
 
         Transaction transaction = new Transaction(user, stock, Transaction.TransactionType.BUY, quantity, currentPrice);
         transactionRepository.save(transaction);
-
+        
+        kafkaTemplate.send(KafkaConfig.TRANSACTION_TOPIC, transaction);
+        
         Portfolio portfolio = portfolioRepository.findByUserAndStock(user, stock)
                 .orElse(new Portfolio(user, stock, BigDecimal.ZERO, BigDecimal.ZERO));
 
